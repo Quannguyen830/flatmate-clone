@@ -1,3 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin-bottom: 3px; /* Change this to px if it's meant to be in pixels */
+}
+
+.logo-list {
+    display: flex;
+    flex-direction: row;
+}
+
+ul.logo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.logo-list li {
+    display: inline-block;
+}
+
+.partner-list li {
+    margin-right: 1.5rem;
+}
+
+.quick-link a:hover {
+    text-decoration: underline;
+}
+
+.logo-list a:hover {
+    opacity: 0.8;
+    transition: all ease-in-out 0s;
+}
+
+.partner-list a:hover {
+    opacity: 0.8;
+    transition: all ease-in-out 0s;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    font-variation-settings: "APRT" 0, "SPAC" 0, "XTDR" 0;
+    line-height: 1.5rem;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: [line1] minmax(134px, 2fr) [line2] minmax(0px, 4fr) [line3] 5fr [line4];
+    grid-template-rows: [row1-start] auto [row1-end];
+}
+
+.grid-post {
+    display: grid;
+    /* grid-template-columns:  */
+}
