@@ -2,10 +2,11 @@ import React from 'react';
 import CtaBox from '../Box/CtaBox';
 import FeedImageContainer from './PostImageContainer';
 import PostBox from '../Box/PostBox';
+import { ItemProps } from '../Item/BreadcrumbsItem';
 
 interface Item {
     id: number;
-    content: React.ReactNode; // Change content to ReactNode
+    content: React.ReactNode;
 }
 
 const items: Item[] = [
@@ -23,28 +24,28 @@ const items: Item[] = [
     },
 ];
 
-const PostContainer = () => {
+const PostContainer: React.FC<ItemProps> = ({className, children}) => {
     return (
-        <div className="pt-0 mx-auto max-w-[1200px] pb-[4rem] flex flew-wrap">
+        <div className={`pt-0 mx-auto max-w-[1200px] pb-[4rem] flex flex-wrap ${className}`}>
             <div className=''>
                 {items.map((item, index) => {
                     let columnStyle = '';
                     switch (index % 3) {
                         case 0:
-                            columnStyle = '';
+                            columnStyle = 'mr-[2.35%]';
                             break;
                         case 1:
-                            columnStyle = '';
+                            columnStyle = 'mr-[2.35%]';
                             break;
                         case 2:
-                            columnStyle = 'mr-0';
+                            columnStyle = '';
                             break;
                         default:
                             columnStyle = '';
                     }
 
                     return (
-                        <div key={item.id} className={`float-left block mr-[2.35%] w-[31.76%] mb-4 ${columnStyle}`}>
+                        <div key={item.id} className={`float-left block w-[31.76%] ${columnStyle}`}>
                             {item.content}
                         </div>
                     );

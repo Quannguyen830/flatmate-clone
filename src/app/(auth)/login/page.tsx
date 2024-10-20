@@ -10,7 +10,7 @@ import PasswordInput from "~/app/_components/Input/PasswordInput";
 
 const Page = () => {
     return (
-        <div>
+        <div className="h-90">
             <div className="relative z-[300]">
                 <div className="fixed inset-0 overflow-scroll bg-overlay transition-colors duration-250 ease-out">
                     <div

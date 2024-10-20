@@ -23,7 +23,7 @@ const NavBar = () => {
         <header className="w-full z-[200] sticky bg-white top-0 flex items-center justify-center border-b leading-6 banner-blue" style={{
             padding: '22px 1rem calc(21px)'
         }}>
-            <nav className="grid-layout gap-4 max-w-[1200px] h-[48px] w-full mx-auto">
+            <nav className="grid-layout  gap-4 max-w-[1200px] h-[48px] w-full mx-auto">
                 {/* Logo */}
                 <div className="flex items-center col-start-1 col-end-2">
                     <Link href='/' className='w-'>

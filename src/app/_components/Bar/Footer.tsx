@@ -13,7 +13,7 @@ import RealEstateLogo from "../Logo/RealEstateLogo";
 
 const Footer = () => {
     return (
-        <footer className="bg-[#2f3a4a] min-h-[336px] mt-8 leading-6 m-0 p-0">
+        <footer className="bg-[#2f3a4a] min-h-[336px] leading-6 m-0 p-0">
             <div className="pt-6 pr-6 pb-16 pl-6 max-w-[1200px] mx-auto">
                 <a href="#">
                     <span className="text-center block">

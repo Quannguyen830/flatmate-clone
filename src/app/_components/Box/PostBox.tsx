@@ -1,13 +1,15 @@
 import React from 'react';
 import FeedImageContainer from '../Container/PostImageContainer';
 import { ItemProps } from '../Item/BreadcrumbsItem';
+import PostImageContainer from '../Container/PostImageContainer';
+import Link from 'next/link';
 
 const PostBox: React.FC<ItemProps> = ({ children, className }) => {
     return (
-        <div className="shadow-none mx-auto mb-4 max-w-[480px] rounded-[12px] overflow-hidden relative z-10">
-            <FeedImageContainer></FeedImageContainer>
+        <div className={`shadow-none mx-auto mb-4 max-w-[480px] rounded-[12px] overflow-hidden relative z-10 ${className}`}>
+            <PostImageContainer></PostImageContainer>
 
-            <a href="/property" className="py-4 h-full bg-white cursor-pointer block relative">
+            <Link href="/property" className="py-4 h-full bg-white cursor-pointer block relative">
                 <div className="shadow-none bg-white p-0 relative">
                     <div className="flex items-center justify-between mb-2">
                         <p className="text-[1.125rem] leading-[22px] text-[#2f3a4a] max-h-[5em]">
@@ -26,7 +28,7 @@ const PostBox: React.FC<ItemProps> = ({ children, className }) => {
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, consectetur quam? Autem, tempore voluptatum repellendus aut qui voluptatibus, sunt doloribus accusantium id, cum doloremque. Voluptas, culpa. A totam qui eaque?
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
     );
 }
