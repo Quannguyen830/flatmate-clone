@@ -19,11 +19,10 @@ const client = new ScrapflyClient({ key: "scp-live-518fd59fbd624e34b95923dcc2418
 //     }),
 // );
 
-const schedule = require('node-schedule')
+// const schedule = require('node-schedule')
 
 export const scrapeList = async () => {
-    let scrape_result
-    scrape_result = await client.scrape(
+    const scrape_result = await client.scrape(
         new ScrapeConfig({
             url: 'https://flatmates.com.au/rooms/sydney',
             asp: true,
@@ -55,9 +54,7 @@ export const scrapeList = async () => {
     //     );
     // })
 
-    const data = JSON.parse(scrape_result.result.content)
-
-    console.log("data: " + data)
+    console.log(scrape_result.result.content)
 
     // return data
 }

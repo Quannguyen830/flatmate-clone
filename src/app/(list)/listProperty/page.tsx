@@ -11,8 +11,6 @@ import StarIcon from "~/app/_components/Logo/StarLogo";
 import { scrapeList } from "~/server/scapeMigration";
 
 const Page = () => {
-    scrapeList();
-
     return (
         <div className="">
             <NavBar></NavBar>
