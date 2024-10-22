@@ -3,6 +3,7 @@ import FeedImageContainer from '../Container/PostImageContainer';
 import { ItemProps } from '../Item/BreadcrumbsItem';
 import PostImageContainer from '../Container/PostImageContainer';
 import Link from 'next/link';
+import FeatureContainer from '../Container/FeatureContainer';
 
 const PostBox: React.FC<ItemProps> = ({ children, className }) => {
     return (
@@ -24,9 +25,12 @@ const PostBox: React.FC<ItemProps> = ({ children, className }) => {
                     <p className="text-[#6d7580] text-[0.875rem] font-normal leading-[20px] m-0 pb-1 whitespace-nowrap max-h-[5em] overflow-hidden text-ellipsis">
                         Victoria Park, Perth
                     </p>
-                    <div className="flex items-center flex-row text-[#6d7580] text-[0.875rem] font-normal">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, consectetur quam? Autem, tempore voluptatum repellendus aut qui voluptatibus, sunt doloribus accusantium id, cum doloremque. Voluptas, culpa. A totam qui eaque?
-                    </div>
+                    
+                    <FeatureContainer></FeatureContainer>
+
+                    <p className="text-[0.875rem] leading-[20px] text-[#6d7580] mt-[0.75rem]">
+                        Available now
+                    </p>
                 </div>
             </Link>
         </div>

@@ -4,11 +4,15 @@ import Footer from "~/app/_components/Bar/Footer";
 import NavBar from "~/app/_components/Bar/NavBar";
 import PostBox from "~/app/_components/Box/PostBox";
 import WidePostBox from "~/app/_components/Box/WidePostBox";
+import FeatureContainer from "~/app/_components/Container/FeatureContainer";
 import GetStartedContainer from "~/app/_components/Container/GetStartedContainer";
 import BreadcrumbsItem from "~/app/_components/Item/BreadcrumbsItem";
 import StarIcon from "~/app/_components/Logo/StarLogo";
+import { scrapeList } from "~/server/scapeMigration";
 
 const Page = () => {
+    scrapeList();
+
     return (
         <div className="">
             <NavBar></NavBar>
@@ -31,7 +35,7 @@ const Page = () => {
                 <div className="pb-8 mx-auto max-w-[1000px] w-ful">
                     <div className="flex items-center justify-between">
                         <h1 className="text-[#2f3a4a] text-[1.125rem] font-bold leading-[22px] m-0 py-[2rem]">
-                            Sydney Share Accommodation
+                            
                         </h1>
                     </div>
 
@@ -67,6 +71,7 @@ const Page = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div>
                                 <button className="flex justify-content items-center bg-white border border-[#2f3a4a] rounded-lg text-[#2f3a4a] inline-block text-[1rem] font-semibold leading-[22px] min-w-[180px] outline-none px-6 py-3">
                                     <span className="mr-2">
@@ -84,11 +89,28 @@ const Page = () => {
                 <div className="flex items-start justify-between max-w-[1000px] mx-auto relative w-full">
                     <div className="w-full max-w-[640px]">
                         <div className="w-full">
-                            <WidePostBox></WidePostBox>
-                            <WidePostBox></WidePostBox>
-                            <WidePostBox></WidePostBox>
-                            <WidePostBox></WidePostBox>
-                            <WidePostBox></WidePostBox>
+                            <WidePostBox>
+                                <div className="flex items-center justify-between mb-2">
+                                    <p className="text-[1.25rem] leading-[26px] text-[#2f3a4a] font-bold">
+                                        $350 / week inc. bills
+                                    </p>
+                                    <div className="flex items-center border border-[#2f3a4a] rounded-sm h-[20px] ml-4">
+                                        <p className="text-[#2f3a4a] text-[0.75rem] font-semibold leading-[20px] m-0 px-2 whitespace-nowrap max-h-[5em] overflow-hidden text-ellipsis">
+                                            Free to message
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <p className="text-[#6d7580] text-[0.875rem] font-normal leading-[20px] m-0 pb-1 whitespace-nowrap max-h-[5em] overflow-hidden text-ellipsis">
+                                    Victoria Park, Perth
+                                </p>
+
+                                <FeatureContainer></FeatureContainer>
+
+                                <p className="text-[0.875rem] leading-[20px] text-[#6d7580] mt-[0.75rem]">
+                                    Available now
+                                </p>
+                            </WidePostBox>
                         </div>
                     </div>
 

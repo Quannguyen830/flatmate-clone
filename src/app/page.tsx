@@ -6,6 +6,8 @@ import CtaContainer from "./_components/Container/CtaContainer";
 import PaginationContainer from "./_components/Container/PaginationContainer";
 import PostContainer from "./_components/Container/PostContainer";
 import SearchContainer from "./_components/Container/SearchContainer";
+import { scrapeList } from "~/server/scapeMigration";
+import { log } from "console";
 
 export default async function Home() {
   return (

@@ -3,6 +3,7 @@ import React from "react";
 export interface ItemProps {
     className?: string,
     children?: React.ReactNode,
+    backgroundImage?: string
 }
 
 const BreadcrumbsItem: React.FC<ItemProps> = ({ children }) => {
