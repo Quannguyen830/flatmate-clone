@@ -80,4 +80,6 @@ body {
     border: 2px solid #ffffff; 
 }
 
-  
+.w-clamp {
+    width: clamp(134px, 100%, 215px);
+}

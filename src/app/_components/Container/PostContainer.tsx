@@ -26,7 +26,7 @@ const items: Item[] = [
 
 const PostContainer: React.FC<ItemProps> = ({className, children}) => {
     return (
-        <div className={`pt-0 mx-auto max-w-[1200px] pb-[4rem] flex flex-wrap ${className}`}>
+        <div className={`pt-0 mx-auto max-w-[1200px] flex flex-wrap ${className}`}>
             <div className=''>
                 {items.map((item, index) => {
                     let columnStyle = '';

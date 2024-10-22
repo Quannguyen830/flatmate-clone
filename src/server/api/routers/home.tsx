@@ -6,23 +6,18 @@ import {
 
 
 export const homeRouter = createTRPCRouter({
-    //   createComment: protectedProcedure
+    //   addToShortlist: protectedProcedure
     //     .input(
     //       z.object({
-    //         content: z.string().min(1, "Comment cannot be empty"),
-    //         postId: z.string(),
-    //         parentId: z.string().optional(),
+    //         propertyId: z.string(),
     //       })
     //     )
     //     .mutation(async ({ ctx, input }) => {
     //       const userId = ctx.session.user.id;
 
-    //       return ctx.db.comment.create({
+    //       return ctx.db..create({
     //         data: {
-    //           content: input.content,
-    //           post: { connect: { id: input.postId } },
-    //           user: { connect: { id: userId } },
-    //           parent: input.parentId ? { connect: { id: input.parentId } } : undefined,
+              
     //         },
     //       });
     //     }),

@@ -11,7 +11,7 @@ const CtaBox: React.FC<ItemProps> = ({className, backgroundImage}) => {
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain'
             }}>
-            <div className="group border-[2px] hover:border-black border-transparent rounded-lg shadow-[0_3px_8px_rgba(0,0,0,0.12),_0_3px_1px_rgba(0,0,0,0.04)] m-1 p-6">
+            <div className="group border-[2px] hover:border-black border-transparent rounded-[12px] shadow-[0_3px_8px_rgba(0,0,0,0.12),_0_3px_1px_rgba(0,0,0,0.04)] m-1 p-6">
                 <div className="flex flex-col items-start justify-center h-[168px] relative z-20">
                     <h3 className="text-[#2f3a4a] text-[1.5rem] font-bold leading-[1.875rem] mb-2 max-w-[230px]">
                         Create a free property listing

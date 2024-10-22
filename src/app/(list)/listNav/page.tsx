@@ -158,7 +158,7 @@ const Page = () => {
                             Latest property listings in Sydney
                         </h2>
 
-                        <PostContainer className="my-8 pb-0"></PostContainer>
+                        <PostContainer className="my-8"></PostContainer>
 
                         <Link href={"/listProperty"} className="p-0 text-[#005ce6] text-[1rem]">
                             View all properties in Sydney
@@ -170,7 +170,7 @@ const Page = () => {
                             Latest property listings in Sydney
                         </h2>
 
-                        <PostContainer className="my-8 pb-0"></PostContainer>
+                        <PostContainer className="mt-8 pb-0"></PostContainer>
 
                         <Link href={"#"} className="p-0 text-[#005ce6] text-[1rem]">
                             View all properties in Sydney
