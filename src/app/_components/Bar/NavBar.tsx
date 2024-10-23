@@ -88,7 +88,7 @@ const NavBar = () => {
 
                 {/* Link list */}
                 <ul className="col-start-3 col-end-4 h-full flex justify-evenly items-center text-center m-0 p-0 list-none">
-                    <li className="m-0">
+                    <li className="hover:bg-[#777] m-0">
                         <a href="#" className="text-flex tracking-[0.0125rem] text-text-primary items-center px-4 py-2 text-sm leading-5 font-bold rounded-md transition duration-250 no-underline">
                             Shortlist
                         </a>

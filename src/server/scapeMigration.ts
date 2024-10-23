@@ -3,19 +3,19 @@ import { link } from "fs";
 import { cheerio } from "node_modules/scrapfly-sdk/esm/deps";
 import ElementType from "domhandler";
 import { ScrapflyClient, ScrapeConfig } from "scrapfly-sdk";
-import { string } from "zod";
+import { number, string } from "zod";
 
 const prisma = new PrismaClient();
 
 const client = new ScrapflyClient({
-  key: process.env.SCRAPFLY_KEY!
+  key: process.env.SCRAPFLY_KEY!,
 });
 
 interface PropertyListingCreateManyInput {
-  location: string,
-  price: string,
-  timeForAvailable: string,
-  description: string,
+  location: string;
+  price: string;
+  timeForAvailable: string;
+  description: string;
 }
 
 interface PropertyListInterface {
@@ -23,7 +23,9 @@ interface PropertyListInterface {
   price: string[];
   timeForAvailable: string[];
   description: string[];
-  imagesList: string[];
+  imagesList: string[][];
+  imagesLength: number[];
+  featureList: string[][];
 }
 
 const propertyList: PropertyListInterface = {
@@ -32,16 +34,51 @@ const propertyList: PropertyListInterface = {
   timeForAvailable: [],
   price: [],
   imagesList: [],
+  imagesLength: [],
+  featureList: []
 };
 
 const getText = (node: cheerio.Element | undefined): string => {
-  if (!node?.children?.[0]) return '';
+  if (!node?.children?.[0]) return "";
   const textNode = node.children[0];
-  if ('data' in textNode) {
+  if ("data" in textNode) {
     return textNode.data;
   }
-  return '';
+  return "";
 };
+
+const getImages = (node: cheerio.Element | undefined): string => {
+  const attribsNode = node?.attribs || string;
+  if('src' in attribsNode) return attribsNode.src
+  return ''
+};
+
+const getFullPrice = (node: cheerio.Element | undefined): string => {
+  if (!node?.children?.[0]) return "";
+  let fulltext = "";
+  for (let i = 0; i < node.children.length; i++) {
+    const textNode = node.children[i] || string;
+
+    if ("data" in textNode) {
+      fulltext += textNode.data;
+    }
+  }
+
+  return fulltext;
+};
+
+const getFeatures = (node: cheerio.Element | undefined): string => {
+  if(!node?.children?.[1]) return '';
+
+  const childrenNode = node.children[1] || string;
+  if("children" in childrenNode) {
+    const textNode = childrenNode.children[0] || string;
+
+    if("data" in textNode) return textNode.data
+  }
+
+  return ''
+}
 
 export const scrapeList = async () => {
   const api_result = await client.scrape(
@@ -65,49 +102,70 @@ export const scrapeList = async () => {
   const descriptionList = api_result.selector(".styles__roomInfo___1BEdy");
   const priceList = api_result.selector(".styles__price___3Jhqs");
   const featureList = api_result.selector(".styles__propertyFeature___uH480");
-  const imagesList = api_result.selector(
-    ".styles__CarouselItemsContainer-sc-10qq1wm-4",
-  );
+  const imagesList = api_result.selector(".styles__CarouselItemsContainer-sc-10qq1wm-4");
+  const imageAltList = api_result.selector("img");
+  
+  for(let i=0; i < featureList.length; i++) {
+    const feature = getFeatures(featureList[i])
+    const tempFeaturesList = propertyList.featureList;
+
+    if(tempFeaturesList.length == 0 || tempFeaturesList[tempFeaturesList.length - 1]?.length === 3) {
+      tempFeaturesList.push([])
+    }
+
+    tempFeaturesList[tempFeaturesList.length - 1]?.push(feature);
+  }
+
+  for(let i=0; i < imageAltList.length-1; i++) {
+    const image = getImages(imageAltList[i])
+    const imagesList = propertyList.imagesList
+    
+    if (imagesList.length == 0 || imagesList[imagesList.length - 1]?.length == 2) {
+      imagesList.push([]);
+    }
+
+    imagesList[imagesList.length - 1]?.push(image);
+  }
 
   for (let i = 0; i < locationList.length; i++) {
+    const price = getFullPrice(priceList[i]);
     const location = getText(locationList[i]);
-    const price = getText(priceList[i]);
     const timeAvailable = getText(availableList[i]);
     const description = getText(descriptionList[i]);
-    // const images = imagesList[i]?.children?.[0]?.children?.[0]?.children?.[0]?.attribs?.srcset || '';
+    const imagesLength = imagesList[i]?.children.length;
 
     propertyList.location.push(location);
     propertyList.price.push(price);
     propertyList.timeForAvailable.push(timeAvailable);
     propertyList.description.push(description);
-    // propertyList.imagesList.push(images);
+    propertyList.imagesLength.push(imagesLength ?? 0)
   }
 
-    console.log(propertyList);
+  console.log(propertyList)
 };
 
 export async function createListings() {
   await scrapeList();
-  const listings: PropertyListingCreateManyInput[] = [];
+  // const listings: PropertyListingCreateManyInput[] = [];
 
-  for (let i = 0; i < propertyList.location.length; i++) {
-    const listing: PropertyListingCreateManyInput = {
-      location: propertyList.location[i] ?? '',
-      description: propertyList.description[i] ?? '',
-      timeForAvailable: propertyList.timeForAvailable[i] ?? '',
-      price: propertyList.price[i] ?? '',
-    };
-    listings.push(listing);
-  }
+  // for (let i = 0; i < propertyList.location.length; i++) {
+  //   const listing: PropertyListingCreateManyInput = {
+  //     location: propertyList.location[i] ?? '',
+  //     description: propertyList.description[i] ?? '',
+  //     timeForAvailable: propertyList.timeForAvailable[i] ?? '',
+  //     price: propertyList.price[i] ?? '',
+  //   };
+  //   listings.push(listing);
+  // }
 
-  try {
-    await prisma.propertyListing.createMany({
-      data: listings,
-    });
-    console.log("Listings added to the database!");
-  } catch (error) {
-    console.error("Error inserting listings:", error);
-  } finally {
-    await prisma.$disconnect();
-  }
+  // try {
+  //   await prisma.propertyListing.createMany({
+  //     data: listings,
+  //   });
+  //   console.log("Listings added to the database!");
+  // } catch (error) {
+  //   console.error("Error inserting listings:", error);
+  // } finally {
+  //   await prisma.$disconnect();
+  // }
 }

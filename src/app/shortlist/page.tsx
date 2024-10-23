@@ -3,11 +3,11 @@ import { createListings } from '~/server/scapeMigration';
 // import { scrapeList } from '~/server/scapeMigration';
 
 const Page = async () => {
-    // createListings().then(() => {
-    //     console.log("Done!");
-    // }).catch((err) => {
-    //     console.error(err);
-    // });
+    createListings().then(() => {
+        console.log("Done!");
+    }).catch((err) => {
+        console.error(err);
+    });
     // scrapeList()
 
     return (

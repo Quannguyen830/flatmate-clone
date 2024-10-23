@@ -75,4 +75,5 @@ model PropertyListing {
   description      String
   timeForAvailable String
   price            String
+  imagesLength     Int?
 }
