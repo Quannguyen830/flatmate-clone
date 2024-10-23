@@ -1,9 +1,9 @@
 
-import { createListings } from '~/server/scapeMigration';
+import { initList } from '~/server/scrape/scapeMigration';
 // import { scrapeList } from '~/server/scapeMigration';
 
 const Page = async () => {
-    createListings().then(() => {
+    initList().then(() => {
         console.log("Done!");
     }).catch((err) => {
         console.error(err);
