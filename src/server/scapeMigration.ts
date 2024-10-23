@@ -1,41 +1,49 @@
 import { PrismaClient } from "@prisma/client";
 import { link } from "fs";
+import { cheerio } from "node_modules/scrapfly-sdk/esm/deps";
+import ElementType from "domhandler";
 import { ScrapflyClient, ScrapeConfig } from "scrapfly-sdk";
 import { string } from "zod";
 
 const prisma = new PrismaClient();
 
 const client = new ScrapflyClient({
-  key: "scp-live-518fd59fbd624e34b95923dcc2418838",
+  key: process.env.SCRAPFLY_KEY!
 });
 
-const propertyList = {
+interface PropertyListingCreateManyInput {
+  location: string,
+  price: string,
+  timeForAvailable: string,
+  description: string,
+}
+
+interface PropertyListInterface {
+  location: string[];
+  price: string[];
+  timeForAvailable: string[];
+  description: string[];
+  imagesList: string[];
+}
+
+const propertyList: PropertyListInterface = {
   location: [],
   description: [],
   timeForAvailable: [],
   price: [],
-  featureList: [],
   imagesList: [],
 };
 
-// let api_result = await client.scrape(
-//     new ScrapeConfig({
-//         url: 'https://flatmates.com.au/share-house-sydney-condell-park-2200-P667124',
-//         asp: true,
-//         format: "json",
-//         country: 'au',
-//         headers: {
-//             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-//             'Referer': 'https://flatmates.com.au/rooms/sydney',
-//             'Authorization': 'https://flatmates.com.au',
-//             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-//         }
-//     }),
-// );
+const getText = (node: cheerio.Element | undefined): string => {
+  if (!node?.children?.[0]) return '';
+  const textNode = node.children[0];
+  if ('data' in textNode) {
+    return textNode.data;
+  }
+  return '';
+};
 
-// const schedule = require('node-schedule')
-
-const scrapeList = async () => {
+export const scrapeList = async () => {
   const api_result = await client.scrape(
     new ScrapeConfig({
       url: "https://flatmates.com.au/rooms/sydney",
@@ -52,23 +60,6 @@ const scrapeList = async () => {
     }),
   );
 
-  // schedule.scheduleJob('0 0 * * *', async () => {
-  //     scrape_result = await client.scrape(
-  //         new ScrapeConfig({
-  //             url: 'https://flatmates.com.au/rooms/sydney',
-  //             asp: true,
-  //             format: "json",
-  //             country: 'au',
-  //             headers: {
-  //                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-  //                 'Referer': 'https://flatmates.com.au/',
-  //                 'Authorization': 'https://flatmates.com.au',
-  //                 'Accept': '*/*',
-  //             }
-  //         }),
-  //     );
-  // })
-
   const locationList = api_result.selector(".styles__address___28Scu");
   const availableList = api_result.selector(".styles__availability___UzGsZ");
   const descriptionList = api_result.selector(".styles__roomInfo___1BEdy");
@@ -79,30 +70,34 @@ const scrapeList = async () => {
   );
 
   for (let i = 0; i < locationList.length; i++) {
-    propertyList.location.push(locationList[i]?.children[0].data);
-    propertyList.price.push(priceList[i]?.children[0].data);
-    propertyList.timeForAvailable.push(availableList[i]?.children[0].data);
-    propertyList.description.push(descriptionList[i]?.children[0].data);
-    propertyList.imagesList.push(
-      imagesList[i]?.children[0].children[0].children[0].attribs.srcset,
-    );
+    const location = getText(locationList[i]);
+    const price = getText(priceList[i]);
+    const timeAvailable = getText(availableList[i]);
+    const description = getText(descriptionList[i]);
+    // const images = imagesList[i]?.children?.[0]?.children?.[0]?.children?.[0]?.attribs?.srcset || '';
+
+    propertyList.location.push(location);
+    propertyList.price.push(price);
+    propertyList.timeForAvailable.push(timeAvailable);
+    propertyList.description.push(description);
+    // propertyList.imagesList.push(images);
   }
 
-  console.log(propertyList);
+    console.log(propertyList);
 };
 
 export async function createListings() {
-  scrapeList();
-  const listings = [];
+  await scrapeList();
+  const listings: PropertyListingCreateManyInput[] = [];
 
   for (let i = 0; i < propertyList.location.length; i++) {
-    listings.push({
-      location: propertyList.location[i],
-      description: propertyList.description[i],
-      timeForAvailable: propertyList.timeForAvailable[i],
-      price: propertyList.price[i],
-      featureList: propertyList.featureList,
-    });
+    const listing: PropertyListingCreateManyInput = {
+      location: propertyList.location[i] ?? '',
+      description: propertyList.description[i] ?? '',
+      timeForAvailable: propertyList.timeForAvailable[i] ?? '',
+      price: propertyList.price[i] ?? '',
+    };
+    listings.push(listing);
   }
 
   try {

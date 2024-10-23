@@ -75,5 +75,5 @@ model PropertyListing {
   description      String
   timeForAvailable String
   price            String
-  featureList      String[]
+  image            String
 }

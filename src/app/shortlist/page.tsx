@@ -1,11 +1,14 @@
-import {
-    ScrapflyClient, ScrapeConfig, ScreenshotConfig, ExtractionConfig
-} from 'scrapfly-sdk';
-import { json } from 'stream/consumers';
-import { createListings } from '~/server/scapeMigration';
 
-const Page = () => {
-    createListings()
+import { createListings } from '~/server/scapeMigration';
+// import { scrapeList } from '~/server/scapeMigration';
+
+const Page = async () => {
+    createListings().then(() => {
+        console.log("Done!");
+    }).catch((err) => {
+        console.error(err);
+    });
+    // scrapeList()
 
     return (
         <div>
