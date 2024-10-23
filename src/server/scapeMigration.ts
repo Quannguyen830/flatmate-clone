@@ -4,6 +4,7 @@ import { cheerio } from "node_modules/scrapfly-sdk/esm/deps";
 import ElementType from "domhandler";
 import { ScrapflyClient, ScrapeConfig } from "scrapfly-sdk";
 import { number, string } from "zod";
+import { features } from "process";
 
 const prisma = new PrismaClient();
 
@@ -48,7 +49,7 @@ const getText = (node: cheerio.Element | undefined): string => {
 };
 
 const getImages = (node: cheerio.Element | undefined): string => {
-  const attribsNode = node?.attribs || string;
+  const attribsNode = node?.attribs ?? string;
   if('src' in attribsNode) return attribsNode.src
   return ''
 };
@@ -56,23 +57,22 @@ const getImages = (node: cheerio.Element | undefined): string => {
 const getFullPrice = (node: cheerio.Element | undefined): string => {
   if (!node?.children?.[0]) return "";
   let fulltext = "";
-  for (let i = 0; i < node.children.length; i++) {
-    const textNode = node.children[i] || string;
 
-    if ("data" in textNode) {
+  for (const textNode of node.children) {
+    if (textNode && "data" in textNode) {
       fulltext += textNode.data;
     }
   }
-
+  
   return fulltext;
 };
 
 const getFeatures = (node: cheerio.Element | undefined): string => {
   if(!node?.children?.[1]) return '';
 
-  const childrenNode = node.children[1] || string;
+  const childrenNode = node.children[1] ?? string;
   if("children" in childrenNode) {
-    const textNode = childrenNode.children[0] || string;
+    const textNode = childrenNode.children[0] ?? string;
 
     if("data" in textNode) return textNode.data
   }
@@ -105,8 +105,8 @@ export const scrapeList = async () => {
   const imagesList = api_result.selector(".styles__CarouselItemsContainer-sc-10qq1wm-4");
   const imageAltList = api_result.selector("img");
   
-  for(let i=0; i < featureList.length; i++) {
-    const feature = getFeatures(featureList[i])
+  for(const featureItem of featureList) {
+    const feature = getFeatures(featureItem)
     const tempFeaturesList = propertyList.featureList;
 
     if(tempFeaturesList.length == 0 || tempFeaturesList[tempFeaturesList.length - 1]?.length === 3) {
