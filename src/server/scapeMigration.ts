@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { link } from "fs";
 import { cheerio } from "node_modules/scrapfly-sdk/esm/deps";
 import ElementType from "domhandler";
