@@ -40,7 +40,7 @@ const Page = () => {
                     <div className="relative">
                         <span className="absolute flex top-6 right-6 z-10">
                             <div className="mr-2 p-[0.5rem] px-[1.5rem] bg-white rounded-[8px] inline-block h-[40px] flex justify-center items-center">
-                                <span className="text-[#6d737e] text-[1rem] font-semibold    leading-[1.5rem] mr-2">Share</span>
+                                <span className="text-[#6d737e] text-[1rem] font-semibold leading-[1.5rem] mr-2">Share</span>
                                 <div className="inline-block flex justify-center items-center align-top">
                                     <div className="mr-3 cursor-pointer inline-block h-full">
                                         <a href="#">
@@ -547,7 +547,7 @@ const Page = () => {
                         </aside>
                     </div>
                 </div>
-            </div >
+            </div>
         </div >
     )
 }

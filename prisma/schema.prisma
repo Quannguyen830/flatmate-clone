@@ -50,7 +50,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    shortlist     Property[]
+    shortlist     PropertyListing[]
 }
 
 model VerificationToken {
@@ -66,7 +66,6 @@ model Property {
     name String
     city String
     description String
-    userId User[]
 }
 
 model PropertyListing {
@@ -75,5 +74,9 @@ model PropertyListing {
   description      String
   timeForAvailable String
   price            String
-  imagesLength     Int?
+  imagesLength     Int
+  images           String[]
+  features         String[]
+  link             String? @unique
+  user             User[]
 }

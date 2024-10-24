@@ -1,9 +1,38 @@
+'use client'
+
 import React from "react";
 import NavBar from "../../_components/Bar/NavBar";
 import Link from "next/link";
-import PostContainer from "../../_components/Container/PostContainer";
+import PostContainer, { PropertyItem } from "../../_components/Container/PostContainer";
+import { api } from "~/trpc/react";
+import PostBox from "~/app/_components/Box/PostBox";
 
 const Page = () => {
+    const { data, isLoading } = api.list.getAllPropertyListings.useQuery()
+    const postItems: PropertyItem[] = []
+
+    if (isLoading) return <div>Loading....</div>
+
+    data?.slice(0, 6).map((listing, index) => {
+        postItems.push({
+            id: index,
+            content: (
+                <PostBox
+                    price={listing.price}
+                    location={listing.location}
+                    description={listing.description}
+                    features={listing.features}
+                    images={listing.images}
+                    imagesLength={listing.imagesLength}
+                    timeForAvailable={listing.timeForAvailable}
+                    link={listing.description}
+                    key={index}
+                >
+                </PostBox>
+            )
+        });
+    });
+
     return (
         <div>
             <NavBar></NavBar>
@@ -158,7 +187,7 @@ const Page = () => {
                             Latest property listings in Sydney
                         </h2>
 
-                        <PostContainer className="my-8"></PostContainer>
+                        <PostContainer items={postItems} className="my-8"></PostContainer>
 
                         <Link href={"/listProperty"} className="p-0 text-[#005ce6] text-[1rem]">
                             View all properties in Sydney
@@ -170,19 +199,19 @@ const Page = () => {
                             Latest property listings in Sydney
                         </h2>
 
-                        <PostContainer className="mt-8 pb-0"></PostContainer>
+                        <PostContainer items={postItems} className="mt-8 pb-0"></PostContainer>
 
                         <Link href={"#"} className="p-0 text-[#005ce6] text-[1rem]">
                             View all properties in Sydney
                         </Link>
                     </section>
-                    
+
                     <section className="mb-[4.5rem] px-4">
                         <h2 className="p-0 text-[1.5rem] font-semibold text-[#2f3a4a] m-0">
                             Latest property listings in Sydney
                         </h2>
 
-                        <PostContainer className="my-8 pb-0"></PostContainer>
+                        <PostContainer items={postItems} className="my-8 pb-0"></PostContainer>
 
                         <Link href={"#"} className="p-0 text-[#005ce6] text-[1rem]">
                             View all properties in Sydney

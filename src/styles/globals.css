@@ -74,6 +74,10 @@ body {
     background: #f1f1f1; 
 }
 
+.scrollbar-none {
+    scrollbar-width: none; /* Firefox */
+  }
+
 ::-webkit-scrollbar-thumb {
     background-color: #808080; 
     border-radius: 10px;
@@ -82,4 +86,9 @@ body {
 
 .w-clamp {
     width: clamp(134px, 100%, 215px);
+}
+
+::before
+::after {
+    box-sizing: border-box;
 }

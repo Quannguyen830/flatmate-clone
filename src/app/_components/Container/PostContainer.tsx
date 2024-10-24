@@ -1,30 +1,19 @@
 import React from 'react';
 import CtaBox from '../Box/CtaBox';
-import FeedImageContainer from './PostImageContainer';
+import FeedImageContainer from './WidePostImageContainer';
 import PostBox from '../Box/PostBox';
 import { ItemProps } from '../Item/BreadcrumbsItem';
 
-interface Item {
-    id: number;
+export interface PropertyItem {
+    id: number | string;
     content: React.ReactNode;
 }
 
-const items: Item[] = [
-    {
-        id: 1,
-        content: (<PostBox></PostBox>),
-    },
-    {
-        id: 2,
-        content: (<PostBox></PostBox>),
-    },
-    {
-        id: 3,
-        content: (<PostBox></PostBox>),
-    },
-];
+interface PostContainerProps extends ItemProps {
+    items: PropertyItem[]; 
+}
 
-const PostContainer: React.FC<ItemProps> = ({className, children}) => {
+const PostContainer: React.FC<PostContainerProps> = ({className, children, items}) => {
     return (
         <div className={`pt-0 mx-auto max-w-[1200px] flex flex-wrap ${className}`}>
             <div className=''>

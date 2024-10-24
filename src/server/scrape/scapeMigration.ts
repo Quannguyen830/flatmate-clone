@@ -8,6 +8,10 @@ interface PropertyListingCreateManyInput {
   price: string;
   timeForAvailable: string;
   description: string;
+  imagesLength: number;
+  images: string[];
+  features: string[];
+  link: string;
 }
 
 export async function initList() {
@@ -20,6 +24,10 @@ export async function initList() {
       description: propertyList.description[i] ?? '',
       timeForAvailable: propertyList.timeForAvailable[i] ?? '',
       price: propertyList.price[i] ?? '',
+      imagesLength: propertyList.imagesLength[i] ?? 0,
+      images: propertyList.imagesList[i] ?? [],
+      features: propertyList.featureList[i] ?? [],
+      link: propertyList.propertyId[i] ?? ''
     };
     listings.push(listing);
   }

@@ -1,3 +1,5 @@
+'use client'
+
 import Link from "next/link";
 import React from "react";
 import Footer from "~/app/_components/Bar/Footer";
@@ -8,14 +10,23 @@ import FeatureContainer from "~/app/_components/Container/FeatureContainer";
 import GetStartedContainer from "~/app/_components/Container/GetStartedContainer";
 import BreadcrumbsItem from "~/app/_components/Item/BreadcrumbsItem";
 import StarIcon from "~/app/_components/Logo/StarLogo";
+import { initList } from "~/server/scrape/scapeMigration";
+import { api } from "~/trpc/react";
+
 
 const Page = () => {
+    const { data, isLoading } = api.list.getAllPropertyListings.useQuery()
+
+    if (isLoading) return <div>Loading....</div>
+
+    console.log(data)
+
     return (
         <div className="">
             <NavBar></NavBar>
 
             <div className="bg-[#eaebec]">
-                <GetStartedContainer></GetStartedContainer>
+                {/* <GetStartedContainer></GetStartedContainer> */}
 
                 <div className="bg-white shadow-[0_4px_4px_-2px_rgba(0,0,0,0.2)]">
                     <div className="block mx-auto max-w-[1200px] pb-1 pt-1 w-full">
@@ -32,11 +43,15 @@ const Page = () => {
                 <div className="pb-8 mx-auto max-w-[1000px] w-ful">
                     <div className="flex items-center justify-between">
                         <h1 className="text-[#2f3a4a] text-[1.125rem] font-bold leading-[22px] m-0 py-[2rem]">
-                            
+                            Sydney Rooms for Rent
                         </h1>
                     </div>
 
                     <div className="flex items-center justify-between border-t border-b border-[#d5d7db]">
+                        <button>
+
+                        </button>
+
                         <div className="text-[#2f3a4a] text-sm font-medium">
                             Viewing 1-12 of 10000 results
                         </div>
@@ -85,30 +100,39 @@ const Page = () => {
 
                 <div className="flex items-start justify-between max-w-[1000px] mx-auto relative w-full">
                     <div className="w-full max-w-[640px]">
-                        <div className="w-full">
-                            <WidePostBox>
-                                <div className="flex items-center justify-between mb-2">
-                                    <p className="text-[1.25rem] leading-[26px] text-[#2f3a4a] font-bold">
-                                        $350 / week inc. bills
-                                    </p>
-                                    <div className="flex items-center border border-[#2f3a4a] rounded-sm h-[20px] ml-4">
-                                        <p className="text-[#2f3a4a] text-[0.75rem] font-semibold leading-[20px] m-0 px-2 whitespace-nowrap max-h-[5em] overflow-hidden text-ellipsis">
-                                            Free to message
+                        {data?.slice(0, 12).map((listing, index) => (
+                            <div key={index} className="w-full">
+                                <WidePostBox imagesList={listing.images} imageLength={listing.imagesLength} link={listing.description}>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <p className="text-[1.25rem] leading-[26px] text-[#2f3a4a] font-bold">
+                                            {listing.price}
                                         </p>
+                                        <div className="flex items-center border border-[#2f3a4a] rounded-sm h-[20px] ml-4">
+                                            <p className="text-[#2f3a4a] text-[0.75rem] font-semibold leading-[20px] m-0 px-2 whitespace-nowrap max-h-[5em] overflow-hidden text-ellipsis">
+                                                Free to message
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <p className="text-[#6d7580] text-[0.875rem] font-normal leading-[20px] m-0 pb-1 whitespace-nowrap max-h-[5em] overflow-hidden text-ellipsis">
-                                    Victoria Park, Perth
-                                </p>
+                                    <p className="text-[#6d7580] text-[0.875rem] font-normal leading-[20px] m-0 pb-1 whitespace-nowrap max-h-[5em] overflow-hidden text-ellipsis">
+                                        {listing.location}
+                                    </p>
 
-                                <FeatureContainer></FeatureContainer>
+                                    <FeatureContainer
+                                        bed={listing.features[0]}
+                                        bathroom={listing.features[1]}
+                                        people={listing.features[2]}
+                                        description={listing.description}
+                                    >
 
-                                <p className="text-[0.875rem] leading-[20px] text-[#6d7580] mt-[0.75rem]">
-                                    Available now
-                                </p>
-                            </WidePostBox>
-                        </div>
+                                    </FeatureContainer>
+
+                                    <p className="text-[0.875rem] leading-[20px] text-[#6d7580] mt-[0.75rem]">
+                                        {listing.timeForAvailable}
+                                    </p>
+                                </WidePostBox>
+                            </div>
+                        ))}
                     </div>
 
                     <div className="w-[300px] my-0 mx-auto">
