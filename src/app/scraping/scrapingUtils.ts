@@ -42,7 +42,7 @@ export const getFeatures = (node: cheerio.Element | undefined): string => {
   return "";
 };
 
-export const getLink = (node: cheerio.Element | undefined): string => {
+export const getPropertyId = (node: cheerio.Element | undefined): string => {
   if(!node?.attribs.href) return "";
 
   return node?.attribs.href

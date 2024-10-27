@@ -1,6 +1,6 @@
 // scraping-service.ts
 import { ScrapflyClient, ScrapeConfig } from "scrapfly-sdk";
-import { getText, getImages, getFullPrice, getFeatures, getLink } from "./scrapingUtils";
+import { getText, getImages, getFullPrice, getFeatures } from "../../app/scraping/scrapingUtils";
 
 const client = new ScrapflyClient({
   key: process.env.SCRAPFLY_KEY!,
@@ -85,14 +85,12 @@ export const scrapeList = async () => {
     const timeAvailable = getText(availableList[i]);
     const description = getText(descriptionList[i]);
     const imagesLength = imagesList[i]?.children.length;
-    const link = getLink(linkList[i]);
 
     propertyList.location.push(location);
     propertyList.price.push(price);
     propertyList.timeForAvailable.push(timeAvailable);
     propertyList.description.push(description);
     propertyList.imagesLength.push(imagesLength ?? 0);
-    propertyList.propertyId.push(link ?? "")
   }
 
   console.log(linkList[0]?.attribs.href)

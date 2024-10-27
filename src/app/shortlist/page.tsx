@@ -5,7 +5,6 @@ import NavBar from '../_components/Bar/NavBar';
 import BreadcrumbsItem from '../_components/Item/BreadcrumbsItem';
 import PostContainer from '../_components/Container/PostContainer';
 import { api } from '~/trpc/react';
-// import { scrapeList } from '~/server/scapeMigration';
 
 const Page = () => {
     const { data, isLoading } = api.list.getShortlistListings.useQuery();
