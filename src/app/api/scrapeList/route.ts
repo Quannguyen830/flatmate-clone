@@ -8,8 +8,8 @@ import {
   getImages,
   getPropertyId,
   getText,
-} from "~/app/scraping/scrapingUtils";
-import { Prisma, PrismaClient } from "@prisma/client";
+} from "~/app/scraping/scrapingListUtils";
+import { PrismaClient } from "@prisma/client";
 
 export async function GET() {
   const instance = ScrapingService.getInstance();
@@ -18,7 +18,8 @@ export async function GET() {
   );
 
   if (result) {
-    const propertyList = await scrapeDataAndPushIntoObject(result);
+    const propertyList = await scrapeDataAndPushIntoObject(result); 
+    await savetoDatabase(propertyList)
     return NextResponse.json(propertyList);
   } else {
     return NextResponse.json(
@@ -110,6 +111,7 @@ async function savetoDatabase(propertyList: PropertyListInterface) {
 
   for (let i = 0; i < propertyList.location.length; i++) {
     const listing: PropertyListDatabase = {
+      propertyId: propertyList.propertyId[i] ?? "",
       location: propertyList.location[i] ?? "",
       description: propertyList.description[i] ?? "",
       timeForAvailable: propertyList.timeForAvailable[i] ?? "",
@@ -117,13 +119,35 @@ async function savetoDatabase(propertyList: PropertyListInterface) {
       imagesLength: propertyList.imagesLength[i] ?? "",
       images: propertyList.imagesList[i] ?? [],
       features: propertyList.featureList[i] ?? [],
-      link: propertyList.propertyId[i] ?? "",
     };
     listings.push(listing);
   }
 
   try {
-    
+    for (const listing of listings) {
+      await prisma.propertyListing.upsert({
+        where: { id: listing.propertyId },
+        update: {
+          location: listing.location,
+          description: listing.description,
+          timeForAvailable: listing.timeForAvailable,
+          price: listing.price,
+          imagesLength: listing.imagesLength,
+          images: listing.images,
+          features: listing.features,
+        },
+        create: {
+          id: listing.propertyId,
+          location: listing.location,
+          description: listing.description,
+          timeForAvailable: listing.timeForAvailable,
+          price: listing.price,
+          imagesLength: listing.imagesLength,
+          images: listing.images,
+          features: listing.features,
+        },
+      });
+    }
   } catch (error) {
     console.error("Error inserting listings:", error);
   } finally {

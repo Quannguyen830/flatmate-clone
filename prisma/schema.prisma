@@ -62,21 +62,31 @@ model VerificationToken {
 }
 
 model Property {
-    id String @id @default(cuid())
-    name String
-    city String
+    id  String @unique @id 
+    location    String
+    price       String[]
+    timeForAvailable String[]
+    shortDescription String
     description String
+    imagesList String[]
+    imagesLength String
+    shortFeatureList String[]
+    tagList String[]
+    propertyFeatures Json
+    overviewDetails Json
+    overviewFeatures Json
+    ownerName String
+    link String
 }
 
 model PropertyListing {
-  id               String   @id @default(cuid())
+  id               String @unique @id
   location         String
   description      String
   timeForAvailable String
   price            String
-  imagesLength     Int
+  imagesLength     String
   images           String[]
   features         String[]
-  link             String? @unique
   user             User[]
 }

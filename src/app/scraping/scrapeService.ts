@@ -4,7 +4,7 @@ export class ScrapingService {
     private static instance: ScrapingService
 
     private constructor() {
-        
+            // Private constructor to prevent direct instantiation
     }
 
     public static getInstance(): ScrapingService {

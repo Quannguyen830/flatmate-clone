@@ -11,7 +11,7 @@ export interface ImageProps {
     imagesList?: string[],
     className?: string,
     children?: React.ReactNode
-    imageLength?: number,
+    imageLength?: string,
     link?: string
 }
 

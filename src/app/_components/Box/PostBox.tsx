@@ -10,7 +10,7 @@ interface PostProps {
     price: string,
     timeForAvailable: string,
     description: string,
-    imagesLength: number,
+    imagesLength: string,
     images: string[],
     features: string[],
     link: string,

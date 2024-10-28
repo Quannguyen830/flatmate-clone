@@ -8,8 +8,27 @@ export interface PropertyListInterface {
     imagesLength: string[];
     featureList: string[][];
 }
+
+export interface PropertyDetailInterface {
+    propertyId: string;
+    location: string;
+    price: string[];
+    timeForAvailable: string[];
+    shortDescription: string;
+    description: string;
+    imagesList: string[];
+    imagesLength: string;
+    shortFeatureList: string[];
+    tagList: string[];
+    propertyFeatures: string[][];
+    overviewDetails: string[][];
+    overviewFeatures: string[][];
+    ownerName: string;
+    link: string;
+}
   
 export interface PropertyListDatabase {
+    propertyId: string,
     location: string;
     price: string;
     timeForAvailable: string;
@@ -17,7 +36,6 @@ export interface PropertyListDatabase {
     imagesLength: string;
     images: string[];
     features: string[];
-    link: string;
 }
 
 export interface MateListInterface {

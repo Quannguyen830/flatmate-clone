@@ -1,6 +1,5 @@
 'use client'
 
-import { initList } from '~/server/scrape/scapeMigration';
 import NavBar from '../_components/Bar/NavBar';
 import BreadcrumbsItem from '../_components/Item/BreadcrumbsItem';
 import PostContainer from '../_components/Container/PostContainer';

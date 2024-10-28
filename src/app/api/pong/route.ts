@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { string } from "zod";
 import { ScrapingService } from "~/app/scraping/scrapeService";
-import { getText } from "~/app/scraping/scrapingUtils";
+import { getText } from "~/app/scraping/scrapingListUtils";
 
 export async function GET() {
   const instance = ScrapingService.getInstance();
