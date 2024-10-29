@@ -11,8 +11,6 @@ import SearchContainer from "./_components/Container/SearchContainer";
 import PostBox from "./_components/Box/PostBox";
 import { useState } from "react";
 import { api } from "~/trpc/react";
-import { Skeleton } from "~/components/ui/skeleton";
-import { SkeletonCard } from "./_components/Item/Skeleton";
 
 export default function Home() {
   const { data, isLoading } = api.list.getAllPropertyListings.useQuery()

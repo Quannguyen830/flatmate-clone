@@ -10,7 +10,6 @@ import FeatureContainer from "~/app/_components/Container/FeatureContainer";
 import GetStartedContainer from "~/app/_components/Container/GetStartedContainer";
 import BreadcrumbsItem from "~/app/_components/Item/BreadcrumbsItem";
 import StarIcon from "~/app/_components/Logo/StarLogo";
-import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/react";
 
 

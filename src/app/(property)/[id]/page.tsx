@@ -10,9 +10,7 @@ import GetStartedContainer from "~/app/_components/Container/GetStartedContainer
 import BreadcrumbsItem from "~/app/_components/Item/BreadcrumbsItem";
 import DescriptionItem from "~/app/_components/Item/DescriptionItem";
 import PropertyFeatureItem from "~/app/_components/Item/PropertyFeatureItem";
-import { SkeletonCard } from "~/app/_components/Item/Skeleton";
 import StarIcon from "~/app/_components/Logo/StarLogo";
-import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/react";
 
 
