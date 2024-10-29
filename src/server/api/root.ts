@@ -15,9 +15,9 @@ export const appRouter = createTRPCRouter({
   property: propertyRouter
 });
 
-if (process.env.NODE_ENV === "production") {
-  initCronJobs();
-}
+// if (process.env.NODE_ENV === "production") {
+//   initCronJobs();
+// }
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
