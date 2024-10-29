@@ -1,24 +1,21 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
-import {
-    ScrapflyClient, ScrapeConfig
-} from 'scrapfly-sdk';
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 
 export const propertyRouter = createTRPCRouter({
-    //   addToShortlist: protectedProcedure
-    //     .input(
-    //       z.object({
-    //         propertyId: z.string(),
-    //       })
-    //     )
-    //     .mutation(async ({ ctx, input }) => {
-    //       const userId = ctx.session.user.id;
+    findPropertyById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const property = await prisma.property.findUnique({
+        where: { id: input.id },
+      });
 
-    //       return ctx.db..create({
-    //         data: {
-              
-    //         },
-    //       });
-    //     }),
+      if (!property) {
+        throw new Error(`Property with ID ${input.id} not found`);
+      }
+
+      return property;
+    }),
 });

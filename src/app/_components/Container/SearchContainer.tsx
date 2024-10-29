@@ -7,26 +7,26 @@ import { ItemProps } from "../Item/BreadcrumbsItem";
 
 const SearchContainer: React.FC<ItemProps> = ({className, children}) => {
     return (
-        <div className= {`${className} relative top-0 p-6 pb-0 h-auto max-h-[90vh] min-w-[500px] rounded-md shadow-[0px_2px_4px_1px_rgba(0,0,0,0.2)] left-0 bottom-0 overflow-auto w-full text-left z-300 bg-[#fff]`}>
+        <div className= {`${className} relative top-0 p-6 pb-0 h-auto max-h-[452px] min-w-[500px] rounded-md shadow-[0px_2px_4px_1px_rgba(0,0,0,0.2)] left-0 bottom-0 overflow-auto w-full text-left z-300 bg-[#fff]`}>
             <form action="">
                 <section>
                     <div className="mx-auto max-w-[70%]">
                         <div className="m-0">
                             <div className="rounded-[3px] flex">
                                 <div className="bg-[#2f3a4a] text-[#fff] border-[#2f3a4a] border-l-[1px] border-b-[1px] border-r-[1px] border-t-[1px] text-[1rem] m-auto w-full rounded-bl-[2px] rounded-tl-[2px] p-[11px] w-full">
-                                    <span className="flex justify-center items-center">
+                                    <span className="flex justify-center items-center leading-[1.25rem]">
                                         Rooms
                                     </span>
                                 </div>
 
                                 <div className="bg-[#fff] text-[#2f3a4a] border-[#2f3a4a] border-b-[1px] border-r-[1px] border-t-[1px] border-t border-b text-[1rem] m-auto w-full rounded-bl-[2px] rounded-tl-[2px] p-[11px] w-full">
-                                    <span className="flex justify-center items-center">
+                                    <span className="flex justify-center items-center leading-[1.25rem]">
                                         Flatmates
                                     </span>
                                 </div>
 
                                 <div className="bg-[#fff] text-[#2f3a4a] border-[#2f3a4a] border-b-[1px] border-r-[1px] border-t-[1px] text-[1rem] m-auto w-full rounded-bl-[2px] rounded-tl-[2px] p-[11px] w-full">
-                                    <span className="flex justify-center items-center">
+                                    <span className="flex justify-center items-center leading-[1.25rem]">
                                         Teamups
                                     </span>
                                 </div>
@@ -54,11 +54,11 @@ const SearchContainer: React.FC<ItemProps> = ({className, children}) => {
                         </button>
                     </div>
 
-                    <div className="my-4">
+                    <div className="mt-4">
                         <span className="text-[#6d7580] font-semibold">
                             Explore a city
                         </span>
-                        <span className="flex my-3 flex-start flex-wrap">
+                        <span className="flex mb-3 flex-start flex-wrap">
                             <LocationItem>Sydney</LocationItem>
                             <LocationItem>Melbourne</LocationItem>
                             <LocationItem>Brisbane</LocationItem>

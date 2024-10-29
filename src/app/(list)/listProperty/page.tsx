@@ -10,13 +10,14 @@ import FeatureContainer from "~/app/_components/Container/FeatureContainer";
 import GetStartedContainer from "~/app/_components/Container/GetStartedContainer";
 import BreadcrumbsItem from "~/app/_components/Item/BreadcrumbsItem";
 import StarIcon from "~/app/_components/Logo/StarLogo";
+import { Skeleton } from "~/components/ui/skeleton";
 import { api } from "~/trpc/react";
 
 
 const Page = () => {
     const { data, isLoading } = api.list.getAllPropertyListings.useQuery()
 
-    if (isLoading) return <div>Loading....</div>
+    if (isLoading) return <div></div>
 
     console.log(data)
 
@@ -101,7 +102,7 @@ const Page = () => {
                     <div className="w-full max-w-[640px]">
                         {data?.slice(0, 12).map((listing, index) => (
                             <div key={index} className="w-full">
-                                <WidePostBox imagesList={listing.images} imageLength={listing.imagesLength} link={listing.description}>
+                                <WidePostBox imagesList={listing.images} imageLength={listing.imagesLength} propertyId={listing.id}>
                                     <div className="flex items-center justify-between mb-2">
                                         <p className="text-[1.25rem] leading-[26px] text-[#2f3a4a] font-bold">
                                             {listing.price}

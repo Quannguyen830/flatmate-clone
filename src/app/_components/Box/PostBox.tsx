@@ -13,16 +13,16 @@ interface PostProps {
     imagesLength: string,
     images: string[],
     features: string[],
-    link: string,
+    propertyId: string,
     className?: string
 }
 
-const PostBox: React.FC<PostProps> = ({ className, location, price, timeForAvailable, description, imagesLength, images, features, link }) => {
+const PostBox: React.FC<PostProps> = ({ className, location, price, timeForAvailable, description, imagesLength, images, features, propertyId }) => {
     return (
         <div className={`mx-auto mb-4 rounded-[12px] ${className}`}>
-            <PostImageContainer imageLength={imagesLength} imagesList={images}></PostImageContainer>
+            <PostImageContainer propertyId={`${propertyId}`} imageLength={imagesLength} imagesList={images}></PostImageContainer>
 
-            <Link href="/property" className="py-4 h-full bg-white block">
+            <Link href={`${propertyId}`} className="py-4 h-full bg-white block">
                 <div className="p-0">
                     <div className="flex items-center justify-between mb-2">
                         <p className="text-[1.125rem] font-bold leading-[22px] text-[#2f3a4a]">

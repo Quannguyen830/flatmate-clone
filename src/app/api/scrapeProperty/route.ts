@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { log } from "console";
 import { NextRequest, NextResponse } from "next/server";
 import { ScrapeResult } from "scrapfly-sdk";
 import { string } from "zod";
@@ -9,9 +10,12 @@ import { getText } from "~/app/scraping/scrapingPropertyUtils";
 const prisma = new PrismaClient()
 
 export async function GET(request: NextRequest) {
+  const {searchParams} = new URL(request.url)
+  const id = searchParams.get("id")
+
   const instance = ScrapingService.getInstance();
   const result = await instance.scrapePages(
-    `https://flatmates.com.au/whole-property-sydney-ashfield-2131-P1632929`,
+    `https://flatmates.com.au/${id}`,
   );
 
   if (result) {
@@ -50,6 +54,11 @@ async function scrapeDataAndPushIntoObject(api_result: ScrapeResult): Promise<Pr
   const shortDescription = getText(api_result.selector(".sc-ZOtfp")[0])
   const imagesLength = getText(api_result.selector(".styles__number___2of24")[0])
   const ownerName = getText(api_result.selector(".styles__status___20DFs>.styles__name___3Cl1v")[0])
+
+  const features = []
+  for(let i=0; i<3; i++) {
+    features.push((Math.round(Math.random() * 4) + 1).toString());
+  }
 
   const priceArray = []
   const priceList = api_result.selector(".styles__roomRent___1bNpE")
@@ -106,6 +115,7 @@ async function scrapeDataAndPushIntoObject(api_result: ScrapeResult): Promise<Pr
   propertyDetail.ownerName = ownerName
   propertyDetail.price = priceArray
   propertyDetail.imagesList = images
+  propertyDetail.shortFeatureList = features
 
   console.log(propertyDetail)
 

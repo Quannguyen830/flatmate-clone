@@ -8,22 +8,24 @@ import CtaContainer from "./_components/Container/CtaContainer";
 import PaginationContainer from "./_components/Container/PaginationContainer";
 import PostContainer, { PropertyItem } from "./_components/Container/PostContainer";
 import SearchContainer from "./_components/Container/SearchContainer";
-import { log } from "console";
 import PostBox from "./_components/Box/PostBox";
 import { useState } from "react";
 import { api } from "~/trpc/react";
+import { Skeleton } from "~/components/ui/skeleton";
+import { SkeletonCard } from "./_components/Item/Skeleton";
 
 export default function Home() {
   const { data, isLoading } = api.list.getAllPropertyListings.useQuery()
   const postItems: PropertyItem[] = []
 
-  if (isLoading) return <div>Loading....</div>
+  if (isLoading) return <div></div>
 
-  data?.map((listing, index) => {
+  data?.slice(0, 12)?.map((listing, index) => {
     postItems.push({
       id: index,
       content: (
         <PostBox
+          propertyId={listing.id}
           price={listing.price}
           location={listing.location}
           description={listing.description}
@@ -31,7 +33,6 @@ export default function Home() {
           images={listing.images}
           imagesLength={listing.imagesLength}
           timeForAvailable={listing.timeForAvailable}
-          link={listing.description}
           key={index}
         >
         </PostBox>

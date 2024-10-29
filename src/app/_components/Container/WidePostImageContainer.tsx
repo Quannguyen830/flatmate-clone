@@ -12,10 +12,10 @@ export interface ImageProps {
     className?: string,
     children?: React.ReactNode
     imageLength?: string,
-    link?: string
+    propertyId: string
 }
 
-const WidePostImageContainer: React.FC<ImageProps> = ({ className, children, imagesList, imageLength }) => {
+const WidePostImageContainer: React.FC<ImageProps> = ({ className, children, imagesList, imageLength, propertyId }) => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [imageIndex, setImageIndex] = useState(0);
 
@@ -31,7 +31,7 @@ const WidePostImageContainer: React.FC<ImageProps> = ({ className, children, ima
 
     return (
         <div className="group rounded-[12px] overflow-hidden w-full z-10 h-[310px] relative">
-            <a href='#' className="cursor-pointer block h-full">
+            <a href={`${propertyId}`} className="cursor-pointer block h-full">
                 <div className="h-full relative">
 
                     <div className="h-full relative w-auto">

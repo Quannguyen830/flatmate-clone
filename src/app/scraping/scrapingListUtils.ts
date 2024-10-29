@@ -45,5 +45,5 @@ export const getFeatures = (node: cheerio.Element | undefined): string => {
 export const getPropertyId = (node: cheerio.Element | undefined): string => {
   if(!node?.attribs.href) return "";
 
-  return node?.attribs.href
+  return node.attribs.href.substring(1);
 }

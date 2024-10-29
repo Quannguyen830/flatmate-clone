@@ -11,7 +11,7 @@ const Page = () => {
     const { data, isLoading } = api.list.getAllPropertyListings.useQuery()
     const postItems: PropertyItem[] = []
 
-    if (isLoading) return <div>Loading....</div>
+    if (isLoading) return <div></div>
 
     data?.slice(0, 6).map((listing, index) => {
         postItems.push({
@@ -25,7 +25,7 @@ const Page = () => {
                     images={listing.images}
                     imagesLength={listing.imagesLength}
                     timeForAvailable={listing.timeForAvailable}
-                    link={listing.description}
+                    propertyId={listing.id}
                     key={index}
                 >
                 </PostBox>
