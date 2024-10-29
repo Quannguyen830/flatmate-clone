@@ -6,10 +6,6 @@ import PostContainer from '../_components/Container/PostContainer';
 import { api } from '~/trpc/react';
 
 const Page = () => {
-    const { data, isLoading } = api.list.getShortlistListings.useQuery();
-
-    if (isLoading) return <div>Loading....</div>
-
     return (
         <div>
             <NavBar></NavBar>
