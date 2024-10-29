@@ -19,9 +19,9 @@ export async function GET() {
 
   if (result) {
     const propertyList = await scrapeDataAndPushIntoObject(result); 
-    for(const propertyId of propertyList.propertyId) {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/scrapeProperty?id=${propertyId}`);
-    }
+    // for(const propertyId of propertyList.propertyId) {
+    //   await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/scrapeProperty?id=${propertyId}`);
+    // }
 
     await savetoDatabase(propertyList)
     return NextResponse.json(propertyList);
